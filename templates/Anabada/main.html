@@ -80,48 +80,55 @@
 
 <div style="display: flex; flex-direction: row; text-align: center; justify-content: center; padding-top: 60px; background: aliceblue">
     <div style="width: 500px; min-width: 500px; margin-right: 300px">
-        <div class="feed_box">
-            <div style="display: flex; flex-direction: row; align-items: center; margin: 20px">
-                <div class="box" style="width: 35px; height: 35px">
-                    <img class="profile"
-                         src="http://sports.chosun.com/news/html/2022/06/13/2022061401000869700055381.jpg">
-                </div>
-                <div style="margin-left: 10px">
-                    sungoangkim
-                </div>
-            </div>
 
-            <div>
-                <img style="width: 100%"
-                     src="https://www.nemopan.com/files/attach/images/6294/138/473/016/5a3285f4a02b1b2131c41ce983456ab9.jpg">
-            </div>
-            <div style="display: flex; flex-direction: row; justify-content: space-between; margin: 0 20px">
+        <!-- 피드 박스 -->
+        {% for feed in feeds %}
+            <div class="feed_box">
+                <div style="display: flex; flex-direction: row; align-items: center; margin: 20px">
+                    <div class="box" style="width: 35px; height: 35px">
+                        <img class="profile"
+                             src="{{ feed.profile_image }}">
+                    </div>
+                    <div style="margin-left: 10px">
+                        {{ feed.user_id }}
+                    </div>
+                </div>
+
                 <div>
+                    <img style="width: 100%"
+                         src="{{ feed.image }}">
+                </div>
+                <div style="display: flex; flex-direction: row; justify-content: space-between; margin: 0 20px">
+                    <div>
                     <span class="material-icons">
                     favorite_border
                     </span>
-                    <span class="material-icons">
+                        <span class="material-icons">
                     chat_bubble_outline
                     </span>
-                    <span class="material-icons">
+                        <span class="material-icons">
                     send
                     </span>
-                </div>
-                <div>
+                    </div>
+                    <div>
                     <span class="material-icons">
                     bookmark_border
                     </span>
+                    </div>
+                </div>
+                <div style="text-align: left; font-size: 14px; margin: 0 20px"> likes <b> {{ feed.like_count }}</b></div>
+                <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.name }} </b></div>
+                <div style="text-align: left; font-size: 16px; margin: 0 20px"> {{ feed.content }}</div>
+                <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.price }} </b> 원 </div>
+                <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> kimkimkim </b> comment</div>
+                <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> leeleelee </b> comment</div>
+                <div style="border-top: solid 1px gray">
+                    <input type="text" class="form-control" style="box-shadow: none; border: none; outline: none"
+                           placeholder="댓글 압력 해주세요 ">
                 </div>
             </div>
-            <div style="text-align: left; font-size: 14px; margin: 0 20px"> likes <b>19 !!</b></div>
-            <div style="text-align: left; font-size: 16px; margin: 0 20px"><b>sungoangkim</b> 신시아 개이쁘다 !!</div>
-            <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> kimkimkim </b> comment</div>
-            <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> leeleelee </b> comment</div>
-            <div style="border-top: solid 1px gray">
-                <input type="text" class="form-control" style="box-shadow: none; border: none; outline: none"
-                       placeholder="댓글 압력 해주세요 ">
-            </div>
-        </div>
+        {% endfor %}
+        <!-- 여기까지 -->
     </div>
     <div style="width: 400px; height: 1000px; position: fixed; left: 65%">
         <div style="display: flex; flex-direction: row; align-items: center; margin: 20px">
@@ -242,7 +249,9 @@
             </div>
         </div>
 
-        <div style="margin-top: 40px; font-size: 12px; color: darkgrey; text-align: left"> 소개 도움말 홍보센터 API <br> 개인정보처리방침 약관 위치 인기계정 해시태그 언어</div>
+        <div style="margin-top: 40px; font-size: 12px; color: darkgrey; text-align: left"> 소개 도움말 홍보센터 API <br> 개인정보처리방침
+            약관 위치 인기계정 해시태그 언어
+        </div>
         <div style="margin-top: 20px; font-size: 12px; color: darkgrey; text-align: left"> 2022 인스타그램 프롬 페이스북</div>
     </div>
 </div>
