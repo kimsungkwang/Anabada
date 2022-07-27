@@ -11,6 +11,8 @@
     <!-- Google Icon -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
+    <!-- Jquery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <title> Anabada </title>
 
@@ -28,11 +30,96 @@
             object-fit: cover;
         }
 
+        .feed_name {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
         .feed_box {
             margin: 20px 0;
             border: solid 1px gray;
             background-color: white;
         }
+
+        .modal_overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+        }
+
+        .modal_window {
+            background: white;
+            backdrop-filter: blur(13.5px);
+            -webkit-backdrop-filter: blur(13.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 800px;
+            height: 600px;
+            position: relative;
+        }
+
+        .modal_title {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+        }
+
+        .modal_title_side {
+            margin: 5px;
+            flex: 0 0 40px;
+            text-align: center;
+        }
+
+        .modal_image_content {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .modal_image_upload {
+            outline: 2px dashed black;
+            outline-offset: -10px;
+            transition: all .15s ease-in-out;
+            width: 798px;
+            height: 548px;
+            text-align: center;
+            line-height: 548px;
+        }
+
+        .modal_image_upload_content {
+            outline: 2px dashed black;
+            outline-offset: -10px;
+            text-align: center;
+            transition: all .15s ease-in-out;
+            width: 500px;
+            height: 548px;
+        }
+
+        .modal_content_write {
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid rgba(0, 0, 0, 0.18);;
+        }
+
+        .feed_content_textarea {
+            resize: none;
+            width: 276px;
+            height: 400px;
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -49,7 +136,7 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a id="nav_bar_add_box" class="nav-link" href="#"> 상품 등록 </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -116,10 +203,11 @@
                     </span>
                     </div>
                 </div>
-                <div style="text-align: left; font-size: 14px; margin: 0 20px"> likes <b> {{ feed.like_count }}</b></div>
+                <div style="text-align: left; font-size: 14px; margin: 0 20px"> likes <b> {{ feed.like_count }}</b>
+                </div>
                 <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.name }} </b></div>
                 <div style="text-align: left; font-size: 16px; margin: 0 20px"> {{ feed.content }}</div>
-                <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.price }} </b> 원 </div>
+                <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.price }} </b> 원</div>
                 <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> kimkimkim </b> comment</div>
                 <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> leeleelee </b> comment</div>
                 <div style="border-top: solid 1px gray">
@@ -256,7 +344,140 @@
     </div>
 </div>
 
+
+<!-- 첫번째 모달 -->
+<div id="first_modal" class="modal_overlay">
+    <div class="modal_window">
+        <div class="modal_title">
+            <div class="modal_title_side"></div>
+            <div> 새 상품 등록</div>
+            <div class="modal_title_side">
+                <span class="material-icons">
+                    close
+                </span>
+            </div>
+        </div>
+        <div class="modal_image_upload">
+            <span style="text-align: center"> 사진을 여기에 끌어다 놓으세요. </span>
+        </div>
+    </div>
+</div>
+
+<!-- 두번째 모달  -->
+<div id="second_modal" class="modal_overlay">
+    <div class="modal_window">
+        <div class="modal_title">
+
+            <div class="modal_title_side"></div>
+            <div> 새 상품 등록</div>
+            <div class="modal_title_side">
+                <span class="material-icons">
+                    close
+                </span>
+            </div>
+        </div>
+
+        <div class="modal_image_content">
+            <div id="input_image" class="modal_image_upload_content">
+
+            </div>
+            <div class="modal_content_write">
+
+                <div style="height: 440px">
+                    <textarea id="input_content" class="feed_content_textarea form-control col-sm-5" rows="10"
+                              placeholder="설명을 입력하세요..."></textarea>
+                </div>
+                <div style="width: 100%; text-align: center">
+                    <button id="button_write_feed" type="button" class="btn btn-primary" style="width: 268px">
+                        상품 등록
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <!-- Optional JavaScript; choose one of the two! -->
+
+<script>
+    $('#nav_bar_add_box').click(function () {
+        $('#first_modal').css({
+            display: 'flex'
+        });
+
+        $(document.body).css({
+            overflowY: 'hidden'
+        });
+    });
+
+    $('.modal_image_upload')
+        .on("dragover", dragOver)
+        .on("dragleave", dragOver)
+        .on("drop", uploadFiles);
+
+    function dragOver(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        if (e.type == "dragover") {
+            $(e.target).css({
+                "background-color": "black",
+                "outline-offset": "-20px"
+            });
+        } else {
+            $(e.target).css({
+                "background-color": "gray",
+                "outline-offset": "-10px"
+            });
+        }
+    }
+
+
+    function uploadFiles(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        e.dataTransfer = e.originalEvent.dataTransfer; //2
+        var files = e.target.files || e.dataTransfer.files;
+        console.log("뭔가 파일을 올렸네?" + files[0].name)
+
+        if (files.length > 1) {
+            alert('하나만 올려라.');
+            return;
+        }
+
+        if (files[0].type.match(/image.*/)) {
+
+            $('#first_modal').css({
+                display: 'none'
+            });
+
+            $('#second_modal').css({
+                display: 'flex'
+            });
+
+            $('.modal_image_upload_content').css({
+                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                "outline": "none",
+                "background-size": "contain",
+                "background-repeat": "no-repeat",
+                "background-position": "center"
+            });
+
+            $('#modal_add_feed').css({
+                display: 'none'
+            });
+
+        } else {
+            alert('이미지가 아닙니다.');
+            return;
+        }
+
+    }
+
+</script>
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
