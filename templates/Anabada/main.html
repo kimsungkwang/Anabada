@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -30,10 +31,29 @@
             object-fit: cover;
         }
 
+        .profile_box {
+            width: 40px;
+            height: 40px;
+            border-radius: 70%;
+            overflow: hidden;
+        }
+
+        .profile_img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .feed_name {
             padding: 10px;
             display: flex;
             align-items: center;
+        }
+
+        .feed_name_txt {
+            font-size: 14px;
+            padding: 0px 10px;
+            font-weight: bold;
         }
 
         .feed_box {
@@ -183,7 +203,7 @@
 
                 <div>
                     <img style="width: 100%"
-                         src="{{ feed.image }}">
+                         src="{% get_media_prefix %}{{ feed.image }}">
                 </div>
                 <div style="display: flex; flex-direction: row; justify-content: space-between; margin: 0 20px">
                     <div>
@@ -222,7 +242,7 @@
         <div style="display: flex; flex-direction: row; align-items: center; margin: 20px">
             <div class="box" style="width: 70px; height: 70px">
                 <img class="profile"
-                     src="http://sports.chosun.com/news/html/2022/06/13/2022061401000869700055381.jpg">
+                     src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
             </div>
             <div style="margin-left: 10px; text-align: left">
                 <div style="font-weight: bold">
@@ -245,7 +265,7 @@
             <div style="display: flex; flex-direction: row">
                 <div class="box" style="width: 35px; height: 35px">
                     <img class="profile"
-                         src="http://sports.chosun.com/news/html/2022/06/13/2022061401000869700055381.jpg">
+                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
                 </div>
                 <div style="margin-left: 10px; text-align: left">
                     <div style="font-weight: bold; font-size: 14px">
@@ -264,7 +284,7 @@
             <div style="display: flex; flex-direction: row">
                 <div class="box" style="width: 35px; height: 35px">
                     <img class="profile"
-                         src="http://sports.chosun.com/news/html/2022/06/13/2022061401000869700055381.jpg">
+                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
                 </div>
                 <div style="margin-left: 10px; text-align: left">
                     <div style="font-weight: bold; font-size: 14px">
@@ -283,7 +303,7 @@
             <div style="display: flex; flex-direction: row">
                 <div class="box" style="width: 35px; height: 35px">
                     <img class="profile"
-                         src="http://sports.chosun.com/news/html/2022/06/13/2022061401000869700055381.jpg">
+                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
                 </div>
                 <div style="margin-left: 10px; text-align: left">
                     <div style="font-weight: bold; font-size: 14px">
@@ -302,7 +322,7 @@
             <div style="display: flex; flex-direction: row">
                 <div class="box" style="width: 35px; height: 35px">
                     <img class="profile"
-                         src="http://sports.chosun.com/news/html/2022/06/13/2022061401000869700055381.jpg">
+                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
                 </div>
                 <div style="margin-left: 10px; text-align: left">
                     <div style="font-weight: bold; font-size: 14px">
@@ -321,7 +341,7 @@
             <div style="display: flex; flex-direction: row">
                 <div class="box" style="width: 35px; height: 35px">
                     <img class="profile"
-                         src="http://sports.chosun.com/news/html/2022/06/13/2022061401000869700055381.jpg">
+                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
                 </div>
                 <div style="margin-left: 10px; text-align: left">
                     <div style="font-weight: bold; font-size: 14px">
@@ -381,14 +401,24 @@
             <div id="input_image" class="modal_image_upload_content">
 
             </div>
+
             <div class="modal_content_write">
+                <div class="feed_name">
+                    <div class="profile_box">
+                        <img id="input_profile_image" class="profile_img"
+                             src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
+                    </div>
+                    <span id="input_user_id" class="feed_name_txt"> sungoangkim </span>
+                </div>
 
                 <div style="height: 440px">
+                    <input id="goods_name" type="text" class="form-control" placeholder="상품명">
+                    <input id="goods_price" type="number" class="form-control" placeholder="판매 가격">
                     <textarea id="input_content" class="feed_content_textarea form-control col-sm-5" rows="10"
                               placeholder="설명을 입력하세요..."></textarea>
                 </div>
                 <div style="width: 100%; text-align: center">
-                    <button id="button_write_feed" type="button" class="btn btn-primary" style="width: 268px">
+                    <button id="feed_create_button" type="button" class="btn btn-primary" style="width: 268px">
                         상품 등록
                     </button>
                 </div>
@@ -402,6 +432,9 @@
 <!-- Optional JavaScript; choose one of the two! -->
 
 <script>
+
+    let files;
+
     $('#nav_bar_add_box').click(function () {
         $('#first_modal').css({
             display: 'flex'
@@ -410,6 +443,45 @@
         $(document.body).css({
             overflowY: 'hidden'
         });
+    });
+
+    $('#feed_create_button').click(function () {
+        alert("상품 등록 완료");
+
+        let file = files[0];
+        let image = files[0].name;
+        let name = $('#goods_name').val();
+        let price = $('#goods_price').val();
+        let content = $('#input_feed_content').val();
+        let user_id = "sungoangkim";
+        let profile_image = "https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800";
+
+        let fd = new FormData();
+
+        fd.append('file', file);
+        fd.append('image', image);
+        fd.append('name', name);
+        fd.append('price', price);
+        fd.append('content', content);
+        fd.append('user_id', user_id);
+        fd.append('profile_image', profile_image);
+
+        $.ajax({
+            url: '/content/upload',
+            data: fd,
+            method: "POST",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+            }
+        })
     });
 
     $('.modal_image_upload')
@@ -440,7 +512,7 @@
         e.preventDefault();
 
         e.dataTransfer = e.originalEvent.dataTransfer; //2
-        var files = e.target.files || e.dataTransfer.files;
+        files = e.target.files || e.dataTransfer.files;
         console.log("뭔가 파일을 올렸네?" + files[0].name)
 
         if (files.length > 1) {
