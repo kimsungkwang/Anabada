@@ -9,7 +9,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <!-- Jquery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <!-- favicon.ico 404 (Not Found) -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <title>회원 가입</title>
 
     <style>
         .background {
@@ -46,33 +52,33 @@
         </div>
         <div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput"> 이메일 주소 </label>
+                <input type="email" class="form-control" id="email_input"="name@example.com">
+                <label for="email_input"> 이메일 주소 </label>
             </div>
         </div>
         <div>
             <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword"> 비밀번호 </label>
+                <input type="password" class="form-control" id="password_input" placeholder="Password">
+                <label for="password_input"> 비밀번호 </label>
             </div>
         </div>
         <div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="Name">
-                <label for="floatingInput"> 이름 </label>
+                <input type="text" class="form-control" id="name_input" placeholder="Name">
+                <label for="name_input"> 이름 </label>
             </div>
         </div>
         <div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="Nickname">
-                <label for="floatingInput"> 닉네임 </label>
+                <input type="text" class="form-control" id="nickname_input" placeholder="Nickname">
+                <label for="nickname_input"> 닉네임 </label>
             </div>
         </div>
         <div style="padding: 5px">
             <button class="btn btn-warning" style="width: 100%"> 카카오톡으로 로그인</button>
         </div>
         <div style="padding: 5px">
-            <button class="btn btn-primary" style="width: 100%"> 가입</button>
+            <button class="btn btn-primary" id="join_button" style="width: 100%"> 가입</button>
         </div>
     </div>
     <div class="join_box_2">
@@ -81,6 +87,42 @@
 </div>
 
 <!-- Optional JavaScript; choose one of the two! -->
+<script>
+    $('#join_button').click(function () {
+
+        let email = $('#email_input').val();
+        let password = $('#password_input').val();
+        let name = $('#name_input').val();
+        let nickname = $('#nickname_input').val();
+
+        console.log(email, password, name, nickname)
+
+        $.ajax({
+            url: '/user/join',
+            data: {
+                email : email,
+                password : password,
+                name : name,
+                nickname : nickname
+            },
+            method: "POST",
+
+            success: function (data) {
+                console.log("성공");
+                alert("회원가입 완료");
+                location.replace('/user/login')
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+            }
+        })
+
+    });
+
+</script>
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
