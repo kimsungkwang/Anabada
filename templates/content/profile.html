@@ -15,6 +15,10 @@
     <!-- Jquery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+
+
     <title> Anabada </title>
 
     <style>
@@ -75,7 +79,6 @@
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(1.5px);
             -webkit-backdrop-filter: blur(1.5px);
-            z-index: 1000;
         }
 
         .modal_window {
@@ -144,7 +147,7 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: fixed; width: 100%; z-index: 999">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: fixed; width: 100%">
     <div class="container-fluid">
         <a class="navbar-brand" href="/main">아나바다</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -162,7 +165,7 @@
                         김성광
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/content/profile">프로필</a></li>
+                        <li><a class="dropdown-item" href="#">프로필</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -193,181 +196,30 @@
 
 
 <div style="display: flex; flex-direction: row; text-align: center; justify-content: center; padding-top: 60px; background: #FAFAFA">
-    <div style="width: 500px; min-width: 500px; margin-right: 300px">
-
-        <!-- 피드 박스 -->
-        {% for feed in feeds %}
-            <div class="feed_box">
-                <div style="display: flex; flex-direction: row; align-items: center; margin: 20px">
-                    <div class="box" style="width: 35px; height: 35px">
-                        <img class="profile"
-                             src="{{ feed.profile_image }}">
-                    </div>
-                    <div style="margin-left: 10px">
-                        {{ feed.user_id }}
-                    </div>
-                </div>
-
-                <div>
-                    <img style="width: 100%"
-                         src="{% get_media_prefix %}{{ feed.image }}">
-                </div>
-                <div style="display: flex; flex-direction: row; justify-content: space-between; margin: 0 20px">
-                    <div>
-                    <span class="material-icons">
-                    favorite_border
-                    </span>
-                        <span class="material-icons">
-                    chat_bubble_outline
-                    </span>
-                        <span class="material-icons">
-                    send
-                    </span>
-                    </div>
-                    <div>
-                    <span class="material-icons">
-                    bookmark_border
-                    </span>
-                    </div>
-                </div>
-                <div style="text-align: left; font-size: 14px; margin: 0 20px"> likes <b> {{ feed.like_count }}</b>
-                </div>
-                <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.name }} </b></div>
-                <div style="text-align: left; font-size: 16px; margin: 0 20px"> {{ feed.content }}</div>
-                <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.price }} </b> 원</div>
-                <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> kimkimkim </b> comment</div>
-                <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> leeleelee </b> comment</div>
-                <div style="border-top: solid 1px gray">
-                    <input type="text" class="form-control" style="box-shadow: none; border: none; outline: none"
-                           placeholder="댓글 압력 해주세요 ">
-                </div>
-            </div>
-        {% endfor %}
-        <!-- 여기까지 -->
+    <div style="padding: 20px 60px; ">
+        <div class="box" style="width: 175px; height: 175px">
+            <img class="profile"
+                 src="{% get_media_prefix %}{{ user.profile_image }}">
+        </div>
     </div>
-    <div style="width: 400px; height: 1000px; position: fixed; left: 65%; z-index: 0">
-        <div style="display: flex; flex-direction: row; align-items: center; margin: 20px">
-            <div class="box" style="width: 70px; height: 70px">
-                <img class="profile"
-                     src="{% get_media_prefix %}{{ user.profile_image }}">
+    <div style="text-align: left">
+        <div style="display: flex; flex-direction: row; margin: 20px">
+            <div style="font-size: 26px; margin-right: 20px">
+                {{ user.nickname }}
             </div>
-            <div style="margin-left: 10px; text-align: left">
-                <div style="font-weight: bold">
-                    sungoangkim
-                </div>
-                <div style="color: gray">
-                    kim sung kwang
-                </div>
-            </div>
+            <button id="button_profile_upload" style="margin-right: 10px">
+                프로필 편집
+            </button>
+            <input type="file" id="input_fileupload" onchange="profile_upload();" style="display: none"/>
         </div>
-        <div style="display: flex;flex-direction: row; justify-content: space-between">
-            <div style="font-weight: bold; color: gray">
-                회원님을 위한 추천
-            </div>
-            <div>
-                <a href="#" style="text-decoration: none; color: black; font-weight: bold">모두 보기</a>
-            </div>
+        <div style="margin-bottom: 20px">
+            게시물 / 내 판매 상품 / 팔로워 111 / 팔로잉 111
         </div>
-        <div style="display: flex; flex-direction: row;justify-content: space-between; align-items: center; ">
-            <div style="display: flex; flex-direction: row">
-                <div class="box" style="width: 25px; height: 25px">
-                    <img class="profile"
-                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
-                </div>
-                <div style="margin-left: 10px; text-align: left">
-                    <div style="font-weight: bold; font-size: 14px">
-                        dfdfdfdsd
-                    </div>
-                    <div style="color: gray; font-size: 14px">
-                        추천 이유
-                    </div>
-                </div>
-            </div>
-            <div>
-                <a href="#" style="text-decoration: none; color: dodgerblue; font-weight: bold; font-size: 14px">팔로우</a>
-            </div>
+        <div>
+            <b>
+                {{ user.name }}
+            </b>
         </div>
-        <div style="display: flex; flex-direction: row;justify-content: space-between; align-items: center; ">
-            <div style="display: flex; flex-direction: row">
-                <div class="box" style="width: 25px; height: 25px">
-                    <img class="profile"
-                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
-                </div>
-                <div style="margin-left: 10px; text-align: left">
-                    <div style="font-weight: bold; font-size: 14px">
-                        dfdfdfdsd
-                    </div>
-                    <div style="color: gray; font-size: 14px">
-                        추천 이유
-                    </div>
-                </div>
-            </div>
-            <div>
-                <a href="#" style="text-decoration: none; color: dodgerblue; font-weight: bold; font-size: 14px">팔로우</a>
-            </div>
-        </div>
-        <div style="display: flex; flex-direction: row;justify-content: space-between; align-items: center; ">
-            <div style="display: flex; flex-direction: row">
-                <div class="box" style="width: 25px; height: 25px">
-                    <img class="profile"
-                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
-                </div>
-                <div style="margin-left: 10px; text-align: left">
-                    <div style="font-weight: bold; font-size: 14px">
-                        dfdfdfdsd
-                    </div>
-                    <div style="color: gray; font-size: 14px">
-                        추천 이유
-                    </div>
-                </div>
-            </div>
-            <div>
-                <a href="#" style="text-decoration: none; color: dodgerblue; font-weight: bold; font-size: 14px">팔로우</a>
-            </div>
-        </div>
-        <div style="display: flex; flex-direction: row;justify-content: space-between; align-items: center; ">
-            <div style="display: flex; flex-direction: row">
-                <div class="box" style="width: 25px; height: 25px">
-                    <img class="profile"
-                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
-                </div>
-                <div style="margin-left: 10px; text-align: left">
-                    <div style="font-weight: bold; font-size: 14px">
-                        dfdfdfdsd
-                    </div>
-                    <div style="color: gray; font-size: 14px">
-                        추천 이유
-                    </div>
-                </div>
-            </div>
-            <div>
-                <a href="#" style="text-decoration: none; color: dodgerblue; font-weight: bold; font-size: 14px">팔로우</a>
-            </div>
-        </div>
-        <div style="display: flex; flex-direction: row;justify-content: space-between; align-items: center; ">
-            <div style="display: flex; flex-direction: row">
-                <div class="box" style="width: 25px; height: 25px">
-                    <img class="profile"
-                         src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
-                </div>
-                <div style="margin-left: 10px; text-align: left">
-                    <div style="font-weight: bold; font-size: 14px">
-                        dfdfdfdsd
-                    </div>
-                    <div style="color: gray; font-size: 14px">
-                        추천 이유
-                    </div>
-                </div>
-            </div>
-            <div>
-                <a href="#" style="text-decoration: none; color: dodgerblue; font-weight: bold; font-size: 14px">팔로우</a>
-            </div>
-        </div>
-
-        <div style="margin-top: 40px; font-size: 12px; color: darkgrey; text-align: left"> 소개 도움말 홍보센터 API <br> 개인정보처리방침
-            약관 위치 인기계정 해시태그 언어
-        </div>
-        <div style="margin-top: 20px; font-size: 12px; color: darkgrey; text-align: left"> 2022 인스타그램 프롬 페이스북</div>
     </div>
 </div>
 
@@ -379,7 +231,9 @@
             <div class="modal_title_side"></div>
             <div> 새 상품 등록</div>
             <div class="modal_title_side">
-                <span class="modal_close material-icons">close</span>
+                <span class="modal_close material-icons">
+                    close
+                </span>
             </div>
         </div>
         <div class="modal_image_upload">
@@ -563,6 +417,39 @@
             return;
         }
 
+    }
+
+    $('#button_profile_upload').click(function () {
+        $('#input_fileupload').click();
+    });
+
+    function profile_upload() {
+
+        let file = $('#input_fileupload')[0].files[0];
+        let email = '{{ user.email }}';
+
+        let fd = new FormData();
+
+        fd.append('file', file);
+        fd.append('email', email);
+
+        $.ajax({
+            url: '/user/profile/upload',
+            data: fd,
+            method: "POST",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+                location.replace("/content/profile");
+            }
+        })
     }
 
 </script>
