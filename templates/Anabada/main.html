@@ -15,6 +15,9 @@
     <!-- Jquery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+    <!-- favicon.ico 404 (Not Found) -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
     <title> Anabada </title>
 
     <style>
@@ -201,10 +204,10 @@
                 <div style="display: flex; flex-direction: row; align-items: center; margin: 20px">
                     <div class="box" style="width: 35px; height: 35px">
                         <img class="profile"
-                             src="{{ feed.profile_image }}">
+                             src="{% get_media_prefix %}{{ feed.profile_image }}">
                     </div>
                     <div style="margin-left: 10px">
-                        {{ feed.user_id }}
+                        {{ feed.nickname }}
                     </div>
                 </div>
 
@@ -235,11 +238,18 @@
                 <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.name }} </b></div>
                 <div style="text-align: left; font-size: 16px; margin: 0 20px"> {{ feed.content }}</div>
                 <div style="text-align: left; font-size: 16px; margin: 0 20px"><b> {{ feed.price }} </b> 원</div>
-                <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> kimkimkim </b> comment</div>
-                <div style="text-align: left; font-size: 14px; margin: 0 20px"><b> leeleelee </b> comment</div>
-                <div style="border-top: solid 1px gray">
-                    <input type="text" class="form-control" style="box-shadow: none; border: none; outline: none"
+                {% for reply in feed.reply_list %}
+                    <div style="text-align: left; font-size: 14px; margin: 0 20px">
+                        <b> {{ reply.nickname }} </b> {{ reply.reply_content }}</div>
+                {% endfor %}
+                <div style="display:flex; flex-direction:row; border-top: solid 1px gray; align-items: center">
+                    <input id="reply_{{ feed.id }}" type="text" class="form-control"
+                           style="box-shadow: none; border: none; outline: none"
                            placeholder="댓글 압력 해주세요 ">
+                    <div feed_id="{{ feed.id }}" class="upload_reply"
+                         style="width: 50px; color: yellowgreen; font-weight: bold">
+                        게시
+                    </div>
                 </div>
             </div>
         {% endfor %}
@@ -419,7 +429,7 @@
                 <div style="height: 440px">
                     <input id="goods_name" type="text" class="form-control" placeholder="상품명">
                     <input id="goods_price" type="number" class="form-control" placeholder="판매 가격">
-                    <textarea id="input_content" class="feed_content_textarea form-control col-sm-5" rows="10"
+                    <textarea id="input_feed_content" class="feed_content_textarea form-control col-sm-5" rows="5"
                               placeholder="설명을 입력하세요."></textarea>
                 </div>
                 <div style="width: 100%; text-align: center">
@@ -437,6 +447,37 @@
 <!-- Optional JavaScript; choose one of the two! -->
 
 <script>
+    $('.upload_reply').click(function (event) {
+        let feed_id = event.target.attributes.getNamedItem('feed_id').value;
+        let reply_id = 'reply_' + feed_id;
+        let reply_content = $('#' + reply_id).val()
+
+        if (reply_content.length <= 0) {
+            alert("댓글을 입력하세요");
+            return 0;
+        }
+
+        $.ajax({
+            url: '/content/reply',
+            data: {
+                feed_id: feed_id,
+                reply_content: reply_content,
+            },
+            method: "POST",
+
+            success: function (data) {
+                console.log("성공");
+                alert("댓글 쓰기 성공");
+                location.replace('/main')
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+            }
+        })
+    })
 
     $('.modal_close').click(function () {
         $('#first_modal').css({
@@ -468,8 +509,6 @@
         let name = $('#goods_name').val();
         let price = $('#goods_price').val();
         let content = $('#input_feed_content').val();
-        let user_id = "sungoangkim";
-        let profile_image = "https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800";
 
         let fd = new FormData();
 
@@ -478,8 +517,6 @@
         fd.append('name', name);
         fd.append('price', price);
         fd.append('content', content);
-        fd.append('user_id', user_id);
-        fd.append('profile_image', profile_image);
 
         $.ajax({
             url: '/content/upload',

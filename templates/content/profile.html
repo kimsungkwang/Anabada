@@ -322,8 +322,6 @@
         let name = $('#goods_name').val();
         let price = $('#goods_price').val();
         let content = $('#input_feed_content').val();
-        let user_id = "sungoangkim";
-        let profile_image = "https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800";
 
         let fd = new FormData();
 
@@ -332,8 +330,6 @@
         fd.append('name', name);
         fd.append('price', price);
         fd.append('content', content);
-        fd.append('user_id', user_id);
-        fd.append('profile_image', profile_image);
 
         $.ajax({
             url: '/content/upload',

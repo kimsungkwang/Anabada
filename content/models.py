@@ -11,9 +11,27 @@ class Feed(models.Model):
     image = models.TextField()
     # 상품 가격
     price = models.IntegerField()
-    # 유저 아이디
-    user_id = models.TextField()
-    # 프로필 이미지
-    profile_image = models.TextField()
+    # 글쓴이
+    email = models.EmailField()
     # 찜 수
     like_count = models.IntegerField()
+
+
+class Like(models.Model):
+    feed_id = models.IntegerField(default=0)
+    # 찜한 유저
+    email = models.EmailField()
+    # 눌렀는지 안눌렀는지
+    is_like = models.BooleanField(default=True)
+
+
+class Reply(models.Model):
+    feed_id = models.IntegerField(default=0)
+    email = models.EmailField()
+    reply_content = models.TextField()
+
+
+class Bookmark(models.Model):
+    feed_id = models.IntegerField(default=0)
+    email = models.EmailField()
+    is_marked = models.BooleanField(default=True)
