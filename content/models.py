@@ -13,8 +13,6 @@ class Feed(models.Model):
     price = models.IntegerField()
     # 글쓴이
     email = models.EmailField()
-    # 찜 수
-    like_count = models.IntegerField()
 
 
 class Like(models.Model):

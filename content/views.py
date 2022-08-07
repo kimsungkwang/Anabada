@@ -13,6 +13,17 @@ from Anabada.settings import MEDIA_ROOT
 class Main(APIView):
     def get(self, request):
 
+        # 세션 --> 로그인 을 한 후 다른 웹 사이트 갔다 와도 그대로 저장 , 로그 아웃 하면 정보들 날라감
+        email = request.session.get('email', None)
+
+        if email is None:
+            return render(request, 'user/login.html')
+
+        user = User.objects.filter(email=email).first()
+
+        if user is None:
+            return render(request, 'user/login.html')
+
         # select * from content_feed; 역활
         feed_object_list = Feed.objects.all().order_by('-id')
         feed_list = []
@@ -29,27 +40,21 @@ class Main(APIView):
                 user = User.objects.filter(email=reply.email).first()
                 reply_list.append(dict(reply_content=reply.reply_content,
                                        nickname=user.nickname))
+            like_count = Like.objects.filter(feed_id=feed.id, is_like=True).count()
+            is_liked = Like.objects.filter(feed_id=feed.id, email=email, is_like=True).exists()
+            is_marked = Bookmark.objects.filter(feed_id=feed.id, email=email, is_marked=True).exists()
             feed_list.append(dict(name=feed.name,
                                   image=feed.image,
                                   content=feed.content,
-                                  like_count=feed.like_count,
+                                  like_count=like_count,
                                   price=feed.price,
                                   profile_image=user.profile_image,
                                   nickname=user.nickname,
                                   reply_list=reply_list,
-                                  id=feed.id
+                                  id=feed.id,
+                                  is_liked=is_liked,
+                                  is_marked=is_marked
                                   ))
-
-        # 세션 --> 로그인 을 한 후 다른 웹 사이트 갔다 와도 그대로 저장 , 로그 아웃 하면 정보들 날라감
-        email = request.session.get('email', None)
-
-        if email is None:
-            return render(request, 'user/login.html')
-
-        user = User.objects.filter(email=email).first()
-
-        if user is None:
-            return render(request, 'user/login.html')
 
         return render(request, "Anabada/main.html", context=dict(feeds=feed_list, user=user))
 
@@ -73,7 +78,7 @@ class UploadFeed(APIView):
         content = request.data.get("content")
         email = request.session.get('email', None)
 
-        Feed.objects.create(image=image, name=name, price=price, content=content, email=email, like_count=0)
+        Feed.objects.create(image=image, name=name, price=price, content=content, email=email)
 
         return Response(status=200)
 
@@ -91,7 +96,17 @@ class Profile(APIView):
         if user is None:
             return render(request, 'user/login.html')
 
-        return render(request, "content/profile.html", context=dict(user=user))
+        feed_list = Feed.objects.filter(email=email)
+        like_list = list(Like.objects.filter(email=email, is_like=True).values_list('feed_id', flat=True))
+        like_feed_list = Feed.objects.filter(id__in=like_list)
+        bookmark_list = list(Bookmark.objects.filter(email=email, is_marked=True).values_list('feed_id', flat=True))
+        bookmark_feed_list = Feed.objects.filter(id__in=bookmark_list)
+        print(like_list)
+
+        return render(request, "content/profile.html", context=dict(feed_list=feed_list,
+                                                                    like_feed_list=like_feed_list,
+                                                                    bookmark_feed_list=bookmark_feed_list,
+                                                                    user=user))
 
 
 class UploadReply(APIView):
@@ -101,5 +116,49 @@ class UploadReply(APIView):
         email = request.session.get('email', None)
 
         Reply.objects.create(feed_id=feed_id, reply_content=reply_content, email=email)
+
+        return Response(status=200)
+
+
+class ToggleLike(APIView):
+    def post(self, request):
+        feed_id = request.data.get('feed_id', None)
+        favorite_text = request.data.get('favorite_text', True)
+
+        if favorite_text == 'favorite_border':
+            is_like = True
+        else:
+            is_like = False
+        email = request.session.get('email', None)
+
+        like = Like.objects.filter(feed_id=feed_id, email=email).first()
+
+        if like:
+            like.is_like = is_like
+            like.save()
+        else:
+            Like.objects.create(feed_id=feed_id, is_like=is_like, email=email)
+
+        return Response(status=200)
+
+
+class ToggleBookmark(APIView):
+    def post(self, request):
+        feed_id = request.data.get('feed_id', None)
+        bookmark_text = request.data.get('bookmark_text', True)
+        print(bookmark_text)
+        if bookmark_text == 'bookmark_border':
+            is_marked = True
+        else:
+            is_marked = False
+        email = request.session.get('email', None)
+
+        bookmark = Bookmark.objects.filter(feed_id=feed_id, email=email).first()
+
+        if bookmark:
+            bookmark.is_marked = is_marked
+            bookmark.save()
+        else:
+            Bookmark.objects.create(feed_id=feed_id, is_marked=is_marked, email=email)
 
         return Response(status=200)

@@ -176,15 +176,6 @@
                 <li class="nav-item">
                     <a id="nav_bar_add_box" class="nav-link"> 상품 등록 </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> 2 </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> 3 </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> 4 </a>
-                </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -217,20 +208,23 @@
                 </div>
                 <div style="display: flex; flex-direction: row; justify-content: space-between; margin: 0 20px">
                     <div>
-                    <span class="material-icons">
-                    favorite_border
-                    </span>
-                        <span class="material-icons">
-                    chat_bubble_outline
-                    </span>
-                        <span class="material-icons">
-                    send
-                    </span>
+                    <span id="favorite_{{ feed.id }}" feed_id="{{ feed.id }}" class="favorite material-icons"
+                          style="color: red; cursor: pointer">
+                        {% if feed.is_liked %}
+                            favorite
+                        {% else %}
+                            favorite_border
+                        {% endif %}
+                    </span>>
                     </div>
                     <div>
-                    <span class="material-icons">
-                    bookmark_border
-                    </span>
+                        <span id="bookmark_{{ feed.id }}" feed_id="{{ feed.id }}" class="bookmark material-icons" style="cursor: pointer">
+                            {% if feed.is_marked %}
+                                bookmark
+                            {% else %}
+                                bookmark_border
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
                 <div style="text-align: left; font-size: 14px; margin: 0 20px"> likes <b> {{ feed.like_count }}</b>
@@ -450,6 +444,68 @@
 <!-- Optional JavaScript; choose one of the two! -->
 
 <script>
+
+    $('.bookmark').click(function (event) {
+        let feed_id = event.target.attributes.getNamedItem('feed_id').value;
+        let bookmark_id = event.target.id;
+        let bookmark_text = $.trim($('#' + bookmark_id).html());
+        if (bookmark_text == 'bookmark') {
+            $('#' + bookmark_id).html('bookmark_border');
+        } else {
+            $('#' + bookmark_id).html('bookmark');
+        }
+
+        $.ajax({
+            url: '/content/bookmark',
+            data: {
+                feed_id: feed_id,
+                bookmark_text: bookmark_text,
+            },
+            method: "POST",
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+            }
+        });
+    });
+
+
+    $('.favorite').click(function (event) {
+        let feed_id = event.target.attributes.getNamedItem('feed_id').value;
+        let favorite_id = event.target.id;
+        console.log(favorite_id)
+        let favorite_text = $.trim($('#' + favorite_id).html());
+        console.log(favorite_text)
+        if (favorite_text == 'favorite') {
+            $('#' + favorite_id).html('favorite_border');
+        } else {
+            $('#' + favorite_id).html('favorite');
+        }
+
+        $.ajax({
+            url: '/content/like',
+            data: {
+                feed_id: feed_id,
+                favorite_text: favorite_text,
+            },
+            method: "POST",
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+            }
+        });
+    });
+
     $('.upload_reply').click(function (event) {
         let feed_id = event.target.attributes.getNamedItem('feed_id').value;
         let reply_id = 'reply_' + feed_id;
@@ -471,7 +527,7 @@
             success: function (data) {
                 console.log("성공");
                 alert("댓글 쓰기 성공");
-                $('#reply_list_' + feed_id).append("<div style='margin: 0 20px; text-align: left; font-size: 14px'><b>{{ user.nickname }}</b>" + reply_content + "/div>")
+                $('#reply_list_' + feed_id).append("<div style='margin: 0 20px; text-align: left; font-size: 14px'><b>{{ user.nickname }}</b>" + reply_content + "</div>")
                 {#location.replace('/main')#}
             },
             error: function (request, status, error) {
