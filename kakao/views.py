@@ -31,4 +31,8 @@ class KakaoCallbackView(APIView):
 
         token_response = requests.post(kakao_token_api, data=data)
 
-        return JsonResponse({"token": token_response.json()})
+        access_token = token_response.json().get('access_token')
+        user_info_response = requests.get('https://kapi.kakao.com/v2/user/me',
+                                          headers={'Authorization': f'Bearer ${access_token}'})
+
+        return JsonResponse({"user_info": user_info_response.json()})
