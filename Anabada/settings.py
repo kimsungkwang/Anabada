@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'user',
     'content',
     'Anabada',
+    'kakao',
 ]
 
 MIDDLEWARE = [
@@ -127,7 +129,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PARSER_CLASSES': ('rest_framework.parsers.FormParser', 'rest_framework.parsers.MultiPartParser')}
+    'DEFAULT_PARSER_CLASSES': ('rest_framework.parsers.FormParser', 'rest_framework.parsers.MultiPartParser')
+}
 
 # mysite/settings.py
 # 각 media 파일에 대한 URL Prefix

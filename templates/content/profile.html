@@ -162,7 +162,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        김성광
+                        {{ user.name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">프로필</a></li>
@@ -306,15 +306,15 @@
                 <div class="feed_name">
                     <div class="profile_box">
                         <img id="input_profile_image" class="profile_img"
-                             src="https://mblogthumb-phinf.pstatic.net/MjAyMTA1MjhfMjUg/MDAxNjIyMTk3NzUyMTAz.JgBnXWFplrlgwuGvVqlosma8FFPXqfGwVApVvMeP3vQg.LRmquqydeYieBEwyF9jWhljRvcd37HQf5dMa_AXxB1Ag.JPEG.mykpoint/Screenshot%EF%BC%BF20210528%EF%BC%8D192632%EF%BC%BFSamsung_Internet.jpg?type=w800">
+                             src="{% get_media_prefix %}{{ user.profile_image }}">
                     </div>
-                    <span id="input_user_id" class="feed_name_txt"> sungoangkim </span>
+                    <span id="input_user_id" class="feed_name_txt"> {{ user.nickname }} </span>
                 </div>
 
                 <div style="height: 440px">
                     <input id="goods_name" type="text" class="form-control" placeholder="상품명">
                     <input id="goods_price" type="number" class="form-control" placeholder="판매 가격">
-                    <textarea id="input_content" class="feed_content_textarea form-control col-sm-5" rows="10"
+                    <textarea id="input_feed_content" class="feed_content_textarea form-control col-sm-5" rows="10"
                               placeholder="설명을 입력하세요."></textarea>
                 </div>
                 <div style="width: 100%; text-align: center">
