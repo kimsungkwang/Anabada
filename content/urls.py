@@ -6,5 +6,6 @@ urlpatterns = [
     path('reply', UploadReply.as_view()),
     path('profile', Profile.as_view()),
     path('like',ToggleLike.as_view()),
-    path('bookmark',ToggleBookmark.as_view())
+    path('bookmark',ToggleBookmark.as_view()),
+
 ]

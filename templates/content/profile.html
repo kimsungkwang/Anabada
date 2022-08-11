@@ -166,7 +166,6 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">프로필</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -175,15 +174,6 @@
                 </li>
                 <li class="nav-item">
                     <a id="nav_bar_add_box" class="nav-link"> 상품 등록 </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> 2 </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> 3 </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> 4 </a>
                 </li>
             </ul>
             <form class="d-flex">
@@ -203,17 +193,14 @@
         </div>
     </div>
     <div style="text-align: left">
-        <div style="display: flex; flex-direction: row; margin: 20px">
-            <div style="font-size: 26px; margin-right: 20px">
+        <div style="display: flex; flex-direction: row; margin: 30px">
+            <div style="font-size: 30px; margin-right: 20px">
                 {{ user.nickname }}
             </div>
             <button id="button_profile_upload" style="margin-right: 10px">
                 프로필 편집
             </button>
             <input type="file" id="input_fileupload" onchange="profile_upload();" style="display: none"/>
-        </div>
-        <div style="margin-bottom: 20px">
-            게시물 / 내 판매 상품 / 팔로워 111 / 팔로잉 111
         </div>
         <div>
             <b>
