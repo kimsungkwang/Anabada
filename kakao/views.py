@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 
-
+# TODO 인가 코드 받기
 class KakaoLoginView(APIView):
 
     def get(self, request):
@@ -29,6 +29,12 @@ class KakaoCallbackView(APIView):
             'code': auth_code
         }
 
+        # TODO 토큰 받기
+        # token_response = requests.post(kakao_token_api, data=data)
+        #
+        # return JsonResponse({"token": token_response.json()})
+
+        # TODO 사용자 정보 가져 오기
         token_response = requests.post(kakao_token_api, data=data)
 
         access_token = token_response.json().get('access_token')
@@ -36,3 +42,4 @@ class KakaoCallbackView(APIView):
                                           headers={'Authorization': f'Bearer ${access_token}'})
 
         return JsonResponse({"user_info": user_info_response.json()})
+
